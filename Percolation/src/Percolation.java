@@ -2,17 +2,18 @@ public class Percolation {
     private int size;
     private int[] states; // from 1 to N,0:closed 1:open
     private WeightedQuickUnionUF cellStorage;
-
+    private WeightedQuickUnionUF cell;
     // create N-by-N grid, with all sites blocked
     public Percolation(int N) {
         size = N;
         states = new int[N * N + 2];
         cellStorage = new WeightedQuickUnionUF(N * N + 2);
+        cell = new WeightedQuickUnionUF(N * N + 2);
         for (int i = 0; i < N * N; i++) {
             states[i] = 0;
         }
-        states[N * N] = 1;
-        states[N * N + 1] = 1;
+        states[N * N] = 1; //virtual top
+        states[N * N + 1] = 1; //virtual bottom
     }
 
     // open site (row i, column j) if it is not already
@@ -29,7 +30,6 @@ public class Percolation {
             union(index, getCellIndex(i - 1, j));
         } else if (i == 1) {
             union(index, size * size);
-            // connect to virtual top cell
         }
         // if not the bottom row
         if (i != size && isOpen(i + 1, j)) {
@@ -57,7 +57,7 @@ public class Percolation {
     // is site (row i, column j) full?
     public boolean isFull(int i, int j) {
         checkRange(i, j);
-        return cellStorage.connected(size * size, getCellIndex(i, j));
+        return cell.connected(size * size, getCellIndex(i, j));
     }
 
     // does the system percolate?
@@ -81,6 +81,9 @@ public class Percolation {
     private void union(int a, int b) {
         if (!cellStorage.connected(a, b)) {
             cellStorage.union(a, b);
+        }
+        if (b != size * size + 1) {
+            cell.union(a, b);
         }
     }
 
