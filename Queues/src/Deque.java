@@ -34,13 +34,13 @@ public class Deque<Item> implements Iterable<Item> {
     public Item removeFirst() {
         if (isEmpty()) 
             throw new java.util.NoSuchElementException();
-        return list.remove(0);
+        return (Item) list.remove(0);
     }
     // delete and return the item at the end
     public Item removeLast() {
         if (isEmpty()) 
             throw new java.util.NoSuchElementException();
-        return list.remove(list.size() - 1);
+        return (Item) list.remove(list.size() - 1);
     }
     // return an iterator over items in order from front to end
     public Iterator<Item> iterator() {
