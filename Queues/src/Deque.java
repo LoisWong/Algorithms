@@ -64,6 +64,15 @@ public class Deque<Item> implements Iterable<Item> {
     }
     // unit testing
     public static void main(String[] args) {
-        return;
+        Deque<Integer> deque = new Deque<Integer>();
+        deque.addFirst(2);
+        System.out.println("size: "+deque.size()+ " removed value: "+deque.removeFirst());
+        deque.addFirst(3);
+        deque.addLast(7);
+        System.out.println("size: "+deque.size()+ " removed value: "+deque.removeLast());
+        for (Integer s : deque)
+        {
+            System.out.print(" " + s + " ");
+        }
     }
 }
