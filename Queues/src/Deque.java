@@ -64,15 +64,63 @@ public class Deque<Item> implements Iterable<Item> {
     }
     // unit testing
     public static void main(String[] args) {
-        Deque<Integer> deque = new Deque<Integer>();
-        deque.addFirst(2);
-        System.out.println("size: "+deque.size()+ " removed value: "+deque.removeFirst());
-        deque.addFirst(3);
-        deque.addLast(7);
-        System.out.println("size: "+deque.size()+ " removed value: "+deque.removeLast());
-        for (Integer s : deque)
-        {
-            System.out.print(" " + s + " ");
-        }
+    // Test case: NullPointer when adding null to deque.
+       Deque<String> d = new Deque<String>();
+       try { 
+           String str = null;
+           d.addFirst(str); 
+           StdOut.println("Test should throw java.lang.NullPointerException: "
+                          + "FAIL!");
+       } catch (java.lang.NullPointerException e)
+       {
+           StdOut.println("Test should throw java.lang.NullPointerException: "
+                          + "Successfull!");
+       }
+
+       // Test case: Throw java.util.NoSuchElementException when deque is 
+       //            empty and someone tries to remove an item. 
+       d = new Deque<String>();
+       try {
+           d.removeFirst();
+           StdOut.println("Test should throw java.util.NoSuchElementException: " 
+                          + "FAIL!");
+       } catch (java.util.NoSuchElementException e)
+       {
+           StdOut.println("Test should throw java.util.NoSuchElementException: "
+                          + "Successfull!");
+       }
+
+       try {
+           d.removeLast();
+           StdOut.println("Test should throw java.util.NoSuchElementException: "
+                           + "FAIL!");
+       } catch (java.util.NoSuchElementException e)
+       {
+           StdOut.println("Test should throw java.util.NoSuchElementException: "
+                          + "Successfull!");
+       }
+
+       // Test case: Add stuff at the front, end and fetch the 
+       //            data from front and end. 
+       d = new Deque<String>();
+       // Make deque 1,2,3,4
+       d.addFirst("3");
+       d.addFirst("2");
+       d.addLast("4");
+       d.addFirst("1");
+       StdOut.println("1 == " + d.removeFirst() + ": size: " + d.size());
+       d.addFirst("0");
+       // deque: 0,2,3,4
+       StdOut.println("4 == " + d.removeLast() + ": size: " + d.size());
+       StdOut.println("3 == " + d.removeLast() + ": size: " + d.size());
+       StdOut.println("0 == " + d.removeFirst() + ": size: " + d.size());
+       StdOut.println("2 == " + d.removeLast() + ": size: " + d.size());
+       try { 
+           d.removeLast(); 
+       } catch (java.util.NoSuchElementException e) 
+         { StdOut.println("deque is empty"); }
+       
+       d.addLast("5");
+       StdOut.println("5 == " + d.removeFirst() + ": size: " + d.size());      
     }
 }
